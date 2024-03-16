@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Input Form</title>
+    <style>
+        body {
+    background: linear-gradient(orange,white,green); /* Adjust colors as needed */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: #fff;
+}
+
+form {
+    background-color: transparent,; 
+    width: 400px;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="number"],
+input[type="date"] {
+    width: calc(100% - 12px);
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button[type="submit"] {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+.error {
+
+    color: red;
+    margin-top: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+#btn{
+	margin: 10px 5px;
+}
+
+a {
+    display: inline-block;
+    padding: 10px 20px;
+    border: 2px solid #007bff; /* Blue border */
+    border-radius: 5px; /* Rounded corners */
+    background-color: #007bff; /* Blue background color */
+    color: #ffffff; /* White text color */
+    text-decoration: none; /* Remove underline */
+    font-size: 14px; /* Adjust font size */
+}
+
+a:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    border-color: #0056b3; /* Darker blue border on hover */
+}
+    </style>
+ 
+</head>
+<body>
+    <form id="userForm" action="Submit" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br>
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required><br>
+
+        <button type="submit">Submit</button>
+        <div id="btn"><a href="Data">Get Data</a></div>
+    </form>
+
+    <div id="errorMessages"></div>
+    <script>
+                function submitForm(event) {
+            event.preventDefault();
+            
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var age = document.getElementById("age").value;
+            var dob = document.getElementById("dob").value;
+
+            var errorMessages = [];
+
+            if (!validateEmail(email)) {
+                errorMessages.push("Invalid email format.");
+            }
+
+            if (isNaN(age) || age <= 0) {
+                errorMessages.push("Age must be a positive integer.");
+            }
+
+            if (errorMessages.length > 0) {
+                displayErrors(errorMessages);
+            } else {
+                // Send data to server-side for further processing (e.g., storing in a database)
+                console.log("Name: " + name);
+                console.log("Email: " + email);
+                console.log("Age: " + age);
+                console.log("Date of Birth: " + dob);
+                // Reset form
+                document.getElementById("userForm").reset();
+                // Clear error messages
+                document.getElementById("errorMessages").innerHTML = "";
+            }
+        }
+
+        function validateEmail(email) {
+            var re = /\S+@\S+\.\S+/;
+            return re.test(email);
+        }
+
+        function displayErrors(errors) {
+            var errorMessage = "<ul>";
+            errors.forEach(function(error) {
+                errorMessage += "<li class='error'>" + error + "</li>";
+            });
+            errorMessage += "</ul>";
+            document.getElementById("errorMessages").innerHTML = errorMessage;
+        }
+    </script>
+</body>
+</html>
